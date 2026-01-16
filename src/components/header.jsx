@@ -5,12 +5,12 @@ export default function Header() {
         <h1><i>That One Dish</i></h1>
 
         <div className="nav-tabs">
-          <button className="tab-btn">Personal Page</button>
-          <button className="tab-btn">Restaurant Dishes</button>
+          <button className="tab">Personal Page</button>
+          <button className="tab">Restaurant Dishes</button>
         </div>
       </div>
 
-      <button className="add-btn">+</button>
+      <button className="addButton">+</button>
     </header>
   );
 }
