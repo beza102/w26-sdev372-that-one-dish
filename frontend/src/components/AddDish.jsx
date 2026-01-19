@@ -8,7 +8,7 @@ function AddDish() {
     dish_details: "",
     restaurant_name: "",
     restaurant_address: "",
-    image_url: ""
+    image: null
   });
 
   const navigate = useNavigate();
@@ -23,18 +23,25 @@ function AddDish() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formPayload = new FormData();
+    formPayload.append("dish_name", formData.dish_name);
+    formPayload.append("cuisine", formData.cuisine);
+    formPayload.append("dish_details", formData.dish_details);
+    formPayload.append("restaurant_name", formData.restaurant_name);
+    formPayload.append("restaurant_address", formData.restaurant_address);
+    if (formData.image) {
+      formPayload.append("image", formData.image);
+    }
+
     try {
       const res = await fetch("http://localhost:3000/api/dishes", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: formPayload
       });
 
       if (!res.ok) throw new Error("Failed to add dish");
 
       alert("Dish added!");
-
-      // Redirect back to Gallery page
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -53,7 +60,13 @@ function AddDish() {
           onChange={handleChange}
           required
         />
-        <input name="cuisine" placeholder="Cuisine" onChange={handleChange} />
+
+        <input
+          name="cuisine"
+          placeholder="Cuisine"
+          onChange={handleChange}
+        />
+
         <input
           name="restaurant_name"
           placeholder="Restaurant name"
@@ -65,28 +78,23 @@ function AddDish() {
           onChange={handleChange}
         />
         <textarea
-          name="diah_details"
+          name="dish_details"
           placeholder="Dish details"
           onChange={handleChange}
         />
         <input
-          name="image_url"
-          placeholder="Image URL"
-          onChange={handleChange}
+          type="file"
+          name="image"
+          accept="image/*"
+          onChange={(e) =>
+            setFormData({ ...formData, image: e.target.files[0] })
+          }
         />
 
         <button className="submitDish" type="submit">
           Add Dish
         </button>
       </form>
-
-      {formData.image_url && (
-        <img
-          src={formData.image_url}
-          alt="Dish preview"
-          style={{ width: "200px", marginTop: "10px" }}
-        />
-      )}
     </div>
   );
 }
