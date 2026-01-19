@@ -1,8 +1,7 @@
 import express from "express";
-import { db } from "../db.js";
+import { pool } from "../db.js"; // use the centralized pool
 import multer from "multer";
 import path from "path";
-import mysql from "mysql2/promise";
 
 const router = express.Router();
 
@@ -19,6 +18,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// GET all dishes
+router.get("/", async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM dishes");
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database query failed" });
+  }
+});
+
+// POST a new dish
 router.post("/", upload.single("image"), async (req, res) => {
   const { dish_name, cuisine, dish_details, restaurant_name, restaurant_address } =
     req.body;
@@ -32,7 +43,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   `;
 
   try {
-    await db.query(sql, [
+    await pool.query(sql, [
       dish_name,
       cuisine,
       dish_details,
