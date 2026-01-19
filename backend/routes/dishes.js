@@ -1,18 +1,8 @@
-import express from 'express';
-import { db } from '../db.js';
-
-const router = express.Router();
-
-router.get('/', async (req, res) => {
-  const [rows] = await db.query('SELECT * FROM dishes');
-  res.json(rows);
-});
-
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const {
     dish_name,
     cuisine,
-    recipe_details,
+    dish_details,
     restaurant_name,
     restaurant_address,
     image_url
@@ -20,20 +10,22 @@ router.post('/', async (req, res) => {
 
   const sql = `
     INSERT INTO dishes
-    (dish_name, cuisine, recipe_details, restaurant_name, restaurant_address, image_url)
+    (dish_name, cuisine, dish_details, restaurant_name, restaurant_address, image_url)
     VALUES (?, ?, ?, ?, ?, ?)
   `;
 
-  await db.query(sql, [
-    dish_name,
-    cuisine,
-    recipe_details,
-    restaurant_name,
-    restaurant_address,
-    image_url
-  ]);
-
-  res.status(201).json({ message: 'Dish added' });
+  try {
+    await db.query(sql, [
+      dish_name,
+      cuisine,
+      dish_details,
+      restaurant_name,
+      restaurant_address,
+      image_url
+    ]);
+    res.status(201).json({ message: "Dish added" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to add dish" });
+  }
 });
-
-export default router;

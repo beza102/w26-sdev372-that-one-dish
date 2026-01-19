@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="header-top">
       <div>
@@ -10,7 +14,7 @@ export default function Header() {
         </div>
       </div>
 
-      <button className="addButton">+</button>
+      <button className="addDishButton" onClick={() => navigate('/add-dish')}>+</button>
     </header>
   );
 }
