@@ -26,13 +26,15 @@ collaborative boards or lists.
 
 ## Features Breakdown
 ### MVP Features:
-1. Authentication (Sign Up / Log In)
-2. Create, read, and edit dish entries
-3. Fields: Dish name, photo, description/ingredients, optional restaurant info
+1. Create and read dish entries
+2. Fields: Dish name, photo, description/ingredients, optional restaurant info
 (name + address), personal notes
-4. Toggle: “Restaurant dish?” Yes / No
-5. Gallery view of all dishes
-6. Save and get data using MySQL by Node.js API
+3. Gallery view of all dishes
+4. Save and get data using MySQL by Node.js API
+
+### Sprint 2:
+1. Toggle: “Restaurant dish?” Yes / No
+2. Make it possible to edit and delete dishes
 
 ### Extended Features:
 1. Create shared food board lists with friends
