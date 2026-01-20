@@ -41,58 +41,82 @@ function AddDish() {
 
       if (!res.ok) throw new Error("Failed to add dish");
 
-      alert("Dish added!");
+      alert("Dish added successfully!");
       navigate("/");
     } catch (err) {
       console.error(err);
-      alert("Error adding dish");
+      alert("Error adding dish. Check if backend is running on port 5000!");
     }
   };
 
   return (
-    <div>
-      <h2>Add a Dish</h2>
+    <div className="add-dish-container">
+      <h2 className="form-title">Add a New Favorite Dish</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="dish_name"
-          placeholder="Dish name"
-          onChange={handleChange}
-          required
-        />
+      <form onSubmit={handleSubmit} className="dish-form">
+        <div className="form-group">
+          <label>Dish Name</label>
+          <input
+            name="dish_name"
+            placeholder="e.g. Cheese Burger"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          name="cuisine"
-          placeholder="Cuisine"
-          onChange={handleChange}
-        />
+        <div className="form-row">
+          <div className="form-group">
+            <label>Cuisine</label>
+            <input
+              name="cuisine"
+              placeholder="e.g. American, Italian, etc."
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Restaurant Name</label>
+            <input
+              name="restaurant_name"
+              placeholder="e.g. That One Place"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
 
-        <input
-          name="restaurant_name"
-          placeholder="Restaurant name"
-          onChange={handleChange}
-        />
-        <input
-          name="restaurant_address"
-          placeholder="Restaurant address"
-          onChange={handleChange}
-        />
-        <textarea
-          name="dish_details"
-          placeholder="Dish details"
-          onChange={handleChange}
-        />
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={(e) =>
-            setFormData({ ...formData, image: e.target.files[0] })
-          }
-        />
+        <div className="form-group">
+          <label>Restaurant Address</label>
+          <input
+            name="restaurant_address"
+            placeholder="123 Street, City, State"
+            onChange={handleChange}
+          />
+        </div>
 
-        <button className="submitDish" type="submit">
-          Add Dish
+        <div className="form-group">
+          <label>Dish Details</label>
+          <textarea
+            name="dish_details"
+            placeholder="What makes this dish so good?"
+            onChange={handleChange}
+            rows="4"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Upload Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            className="file-input"
+            onChange={(e) =>
+              setFormData({ ...formData, image: e.target.files[0] })
+            }
+          />
+        </div>
+
+        <button className="submit-button" type="submit">
+        Add to Gallery
         </button>
       </form>
     </div>
