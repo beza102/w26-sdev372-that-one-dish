@@ -1,3 +1,386 @@
+bezi102
+bezi102
+Online
+
+Liza Khrapach — 4/2/2025 11:10 AM
+https://discord.gg/9DXAv9vV
+Liza Khrapach — 10/23/2025 12:33 PM
+https://lizock.github.io/paste-listen/
+You missed a call from 
+Liza Khrapach
+ that lasted a minute. — 10/24/2025 5:25 PM
+bezi102 — 10/24/2025 5:33 PM
+am so sorry, am ready now
+Liza Khrapach — 10/24/2025 5:33 PM
+No worries at all!
+Liza Khrapach
+ started a call that lasted an hour. — 10/24/2025 5:33 PM
+Liza Khrapach — 10/24/2025 6:42 PM
+https://chatgpt.com/share/68fc2b01-0340-8010-ba1a-131720eca766
+ChatGPT
+ChatGPT - Implementation plan and tasks
+Shared via ChatGPT
+Image
+Liza Khrapach — 10/31/2025 9:03 AM
+Good morning
+bezi102 — 10/31/2025 9:03 AM
+hey good morning
+Liza Khrapach — 10/31/2025 9:04 AM
+Should we call now?
+bezi102 — 10/31/2025 9:04 AM
+ya
+Liza Khrapach
+ started a call that lasted an hour. — 10/31/2025 9:04 AM
+Liza Khrapach
+ started a call that lasted 2 minutes. — 10/31/2025 10:58 AM
+Liza Khrapach — 11/4/2025 11:02 AM
+Wave 2 Planning
+Overal Goal
+The goal of this phase is to create an Express-based server that can interact with the videoProcessor.jar from Wave 1.
+The server will expose a REST API (Salamander API) that allows clients to:
+
+List available videos stored locally.
+Generate thumbnails for those videos.
+Start asynchronous processing jobs using the Java JAR.
+Check the status of those jobs and retrieve results once processing completes.
+
+The Express server will not contain any centroid logic — it will only coordinate requests, file management, and job tracking.
+
+Architecture Diagram
+Client (Frontend or Postman)
+ ↓
+Express Server (Node.js)
+ ↓
+centroid-finder-1.0-SNAPSHOT-jar-with-dependencies.jar (Java)
+ ↓
+Filesystem (/videos, /results, /jobs)
+Liza Khrapach — 11/6/2025 4:26 PM
+Hey Beza, let's call at 5?
+bezi102 — 11/6/2025 4:57 PM
+Ok
+Liza Khrapach
+ started a call that lasted 17 minutes. — 11/6/2025 5:02 PM
+Liza Khrapach — 11/6/2025 5:14 PM
+Wave 2: Planning
+Overall Goal
+The goal of this wave is to build an Express.js server that exposes an API for managing and processing videos using the existing VideoProcessor JAR from the Centroid Finder project.
+The server will allow users to:
+
+View available videos.
+Generate a thumbnail (first frame).
+Start a background video processing job.
+Check the status of a running or completed job.
+
+The Express server will not perform any centroid or frame analysis itself—it will call the Java JAR to handle processing.
+
+---
+
+Architecture Diagram
+Client
+  ↓ (HTTP Request)
+Express Server
+  ↓ (child_process spawn)
+VideoProcessor.jar
+  ↓
+Output CSV → Results folder
+
+---
+
+Components
+Express Server (Node.js)
+Hosts API endpoints for /api/videos, /thumbnail/:filename, /process/:filename, and /process/:jobId/status.
+Loads configuration from .env (e.g., VIDEOS_DIR, JAR_PATH, and RESULTS_DIR).
+Uses express.static() to serve video and result files publicly.
+Spawns a detached background process using child_process.spawn() to run the Java JAR.
+Generates and tracks unique jobIds using the uuid library.
+
+Environment Variables (.env)
+VIDEOS_DIR — path to directory containing uploaded videos.
+RESULTS_DIR — path to store processed CSVs.
+JAR_PATH — path to the compiled VideoProcessor.jar.
+Job Tracker
+Keeps a JSON file or in-memory map of active and completed jobs:
+
+  
+jobId
+status ("processing", "done", "error")
+resultPath (when done)
+Allows /process/:jobId/status to return real-time progress.
+
+FFmpeg / Thumbnail Generator
+Uses FFmpeg (via fluent-ffmpeg) to grab the first frame from the video.
+Returns it as a JPEG to the client.
+
+VideoProcessor (Java JAR)
+Called from Express using:
+
+  
+  spawn('java', ['-jar', jarPath, inputPath, outputCsv, targetColor, threshold], { detached: true })
+  
+
+Handles all the actual frame reading and centroid analysis logic.
+Outputs a CSV file in the results directory.
+Liza Khrapach
+ started a call that lasted a few seconds. — 11/6/2025 5:19 PM
+Liza Khrapach
+ started a call that lasted an hour. — 11/6/2025 5:22 PM
+Liza Khrapach — 11/6/2025 5:45 PM
+https://chatgpt.com/share/68fc2b01-0340-8010-ba1a-131720eca766
+ChatGPT
+ChatGPT - Implementation plan and tasks
+Shared via ChatGPT
+Image
+Liza Khrapach
+ started a call that lasted 3 hours. — 11/23/2025 7:19 PM
+bezi102 — 11/23/2025 7:34 PM
+docker build -t centroid-test .
+Liza Khrapach — 11/23/2025 7:41 PM
+Beza, if you want we can 
+GitHub
+Docker Image Complete by arcjun01 · Pull Request #37 · grc-cohort...
+Docker Image Complete by arcjun01 · Pull Request #37 · grc-cohort...
+https://github.com/arcjun01/centroid_finder/tree/image
+GitHub
+GitHub - arcjun01/centroid_finder at image
+Contribute to arcjun01/centroid_finder development by creating an account on GitHub.
+Contribute to arcjun01/centroid_finder development by creating an account on GitHub.
+bezi102 — 11/23/2025 7:45 PM
+https://github.com/grc-cohort-21/centroid-finder/pull/47
+GitHub
+Tests/integration process and jobs by beza102 · Pull Request #47 ...
+Tests/integration process and jobs by beza102 · Pull Request #47 ...
+Liza Khrapach — 11/23/2025 9:17 PM
+https://github.com/grc-cohort-21/centroid-finder/pull/48
+GitHub
+Refactoring Code: Standardized job storage to remove duplicate JSON...
+Refactoring Code: Standardized job storage to remove duplicate JSON...
+bezi102 — 11/23/2025 10:15 PM
+https://github.com/grc-cohort-21/centroid-finder/pull/49
+GitHub
+Refactor: move all .md files to docs/ and remove extra files by bez...
+Refactor: move all .md files to docs/ and remove extra files by bez...
+Liza Khrapach — 1/8/2026 1:37 PM
+https://designer.microsoft.com/image-creator
+Microsoft Designer - Stunning designs in a flash
+A graphic design app that helps you create professional quality social media posts, invitations, digital postcards, graphics, and more. Start with your idea and create something unique for you.
+and you can prompt form server made out of spagetty / out of foor
+food*
+Liza Khrapach — 1/9/2026 3:03 PM
+Hey Beza, when are you available to call to work on the group assignment for Susan's class?
+bezi102 — 1/9/2026 3:19 PM
+I can do today after 6
+Liza Khrapach — 1/9/2026 3:22 PM
+what time do you go to bed?
+bezi102 — 1/9/2026 3:23 PM
+Usually after 12
+Liza Khrapach — 1/9/2026 3:23 PM
+I have time after 8:20
+let's call at that time then?
+If it's not too late for you
+bezi102 — 1/9/2026 3:24 PM
+Ya that works for me
+Liza Khrapach — 1/9/2026 3:24 PM
+Great! I'll see you later then :))
+Liza Khrapach
+ started a call that lasted an hour. — 1/9/2026 8:20 PM
+Liza Khrapach — 1/9/2026 8:23 PM
+https://colab.research.google.com/drive/1kzBIbYfQ3X4rYnjAxCicjFjWjSIRT_1V?usp=sharing
+Google Colab
+Image
+Image
+Liza Khrapach — 1/9/2026 9:03 PM
+https://colab.research.google.com/drive/1kzBIbYfQ3X4rYnjAxCicjFjWjSIRT_1V?usp=sharing
+Google Colab
+Image
+bezi102 — 1/13/2026 2:26 PM
+# Project Overview
+## Project Name
+That One Dish
+## Tagline
+Track the dishes worth remembering and share them with friends.
+## Problem Statement
+Expand
+message.txt
+3 KB
+Liza Khrapach — 1:29 PM
+/* Global Reset */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #ffffff;
+}
+
+/* Header & Container Styles */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.tab {
+  padding: 10px 20px;
+  background: #e0e0e0;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.addButton {
+  width: 100px;
+  height: 80px;
+  font-size: 2.5rem;
+  background: #9e9e9e;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* Container for the whole page */
+.add-dish-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.form-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+input, textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #ff5e6b;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+... (101 lines left)
+Collapse
+index.css
+4 KB
+.page {
+  background: #9fb2b4;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background: white;
+  max-width: 800px;
+  margin: auto;
+  padding: 40px;
+  border-radius: 6px;
+}
+
+.image-box {
+  width: 180px;
+  height: 180px;
+  background: #e0e0e0;
+  border-radius: 20px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  font-size: 48px;
+  color: #777;
+}
+
+.form {
+  max-width: 500px;
+  margin: auto;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.field label {
+  width: 170px;
+}
+
+.field input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #f2f2f2;
+}
+
+button {
+  float: right;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #eee;
+  cursor: pointer;
+}
+Collapse
+createRestaurantDish.css
+2 KB
+﻿
 .page {
   background: #9fb2b4;
   min-height: 100vh;
