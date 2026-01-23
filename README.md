@@ -1,37 +1,46 @@
 # Project Overview
 ## Project Name
 That One Dish
+
 ## Tagline
 Track the dishes worth remembering and share them with friends.
+
 ## Problem Statement
 People often remember a dish they loved but forget the restaurant name, location,
 or details of the meal. Existing apps like notes, photo galleries, or social media
 do not organize these food memories effectively. This makes it difficult to revisit
 favorite dishes, recommend meals to friends, or recall personal food experiences.
+
 ## Solution
 That One Dish lets users save photos of dishes along with key details such as
 restaurant name, location, cuisine, and personal notes. Users can log dishes from
 restaurants they visit or add standalone dishes for cooking inspiration. All
 entries are organized in a gallery view and can be shared with friends through
 collaborative boards or lists.
+
 ## Target Users
 - Food lovers who want to keep track of meals they enjoyed
 - Students and young professionals who eat out frequently
 - Travelers who want to remember restaurants from different cities
 - Friends who want to share food recommendations
+
 ## Features Breakdown
 ### MVP Features:
-1. Authentication (Sign Up / Log In)
-2. Create, read, and edit dish entries
-3. Fields: Dish name, photo, description/ingredients, optional restaurant info
+1. Create and read dish entries
+2. Fields: Dish name, photo, description/ingredients, optional restaurant info
 (name + address), personal notes
-4. Toggle: “Restaurant dish?” Yes / No
-5. Gallery view of all dishes
-6. Save and get data using MySQL by Node.js API
+3. Gallery view of all dishes
+4. Save and get data using MySQL by Node.js API
+
+### Sprint 2:
+1. Toggle: “Restaurant dish?” Yes / No
+2. Make it possible to edit and delete dishes
+
 ### Extended Features:
 1. Create shared food board lists with friends
 2. Filter or search by cuisine or location
 3. Menu photo upload + OCR for auto-filling dish entries
+
 ## Data Model Planning
 ### Core Entities
 - **User:** tracks account info, owns dishes, belongs to boards
@@ -40,6 +49,7 @@ restaurant
 - **Restaurant:** name, address, cuisine type; has many dishes
 - **Board:** shared list of dishes among users
 - **BoardMembership:** joins users to boards
+
 ### Key Relationships
 - A User can create many Dishes
 - A Restaurant can have many Dishes
@@ -47,6 +57,7 @@ restaurant
 - A Board can have many Dishes
 - A User can belong to many Boards through BoardMembership
 - A Board can have many Users through BoardMembership
+
 ## User Experience
 ### User Flows:
 **Create a Dish Entry (Restaurant Dish)**
