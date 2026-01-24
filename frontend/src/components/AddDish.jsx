@@ -13,6 +13,8 @@ function AddDish() {
 
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const [isRestaurantDish, setIsRestaurantDish] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -81,12 +83,28 @@ function AddDish() {
               onChange={handleChange}
             />
           </div>
+
+        <div className="form-group checkbox-group">
+          <label style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
+            <input 
+              type="checkbox" 
+              checked={isRestaurantDish} 
+              onChange={(e) => setIsRestaurantDish(e.target.checked)} 
+              style={{ width: '18px', height: '18px' }}
+            />
+            Is this from a restaurant?
+          </label>
+        </div>
+      </div>
+
+      <div className="form-row">
           <div className="form-group">
             <label>Restaurant Name</label>
             <input
               name="restaurant_name"
               placeholder="e.g. That One Place"
               onChange={handleChange}
+              required={isRestaurantDish}
             />
           </div>
         </div>
@@ -97,6 +115,7 @@ function AddDish() {
             name="restaurant_address"
             placeholder="123 Street, City, State"
             onChange={handleChange}
+            required={isRestaurantDish}
           />
         </div>
 
