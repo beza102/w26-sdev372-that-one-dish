@@ -11,6 +11,8 @@ function AddDish() {
     image: null
   });
 
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -41,14 +43,20 @@ function AddDish() {
 
       if (!res.ok) throw new Error("Failed to add dish");
 
-      alert("Dish added successfully!");
-      navigate("/");
+      setShowSuccess(true);
+
+      setTimeout(() => {
+        setShowSuccess(false);
+        navigate("/");
+      }, 2000);
+
     } catch (err) {
       console.error(err);
-      alert("Error adding dish. Check if backend is running on port 5000!");
+      alert("Error adding dish");
     }
   };
 
+  
   return (
     <div className="add-dish-container">
       <h2 className="form-title">Add a New Favorite Dish</h2>
@@ -119,6 +127,21 @@ function AddDish() {
         Add to Gallery
         </button>
       </form>
+
+      {showSuccess && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button 
+              onClick={() => { setShowSuccess(false); navigate("/"); }}
+              style={{ float: 'right', border: 'none', background: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+            >
+              x
+            </button>
+            <h3>Delicious!</h3>
+            <p>Your dish has been added to the gallery.</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
