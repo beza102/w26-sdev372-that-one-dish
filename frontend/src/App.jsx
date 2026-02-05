@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Gallery from "./components/Gallery";
 import AddDish from "./components/AddDish";
+import DishDetail from "./components/DishDetail";
 
 const BASE_PATH = "/that_one_dish";
 
