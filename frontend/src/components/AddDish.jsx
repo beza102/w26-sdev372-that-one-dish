@@ -11,6 +11,10 @@ function AddDish() {
     image: null
   });
 
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const [isRestaurantDish, setIsRestaurantDish] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -41,14 +45,20 @@ function AddDish() {
 
       if (!res.ok) throw new Error("Failed to add dish");
 
-      alert("Dish added successfully!");
-      navigate("/");
+      setShowSuccess(true);
+
+      setTimeout(() => {
+        setShowSuccess(false);
+        navigate("/");
+      }, 2000);
+
     } catch (err) {
       console.error(err);
-      alert("Error adding dish. Check if backend is running on port 5000!");
+      alert("Error adding dish");
     }
   };
 
+  
   return (
     <div className="add-dish-container">
       <h2 className="form-title">Add a New Favorite Dish</h2>
@@ -73,12 +83,28 @@ function AddDish() {
               onChange={handleChange}
             />
           </div>
+
+        <div className="form-group checkbox-group">
+          <label style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
+            <input 
+              type="checkbox" 
+              checked={isRestaurantDish} 
+              onChange={(e) => setIsRestaurantDish(e.target.checked)} 
+              style={{ width: '18px', height: '18px' }}
+            />
+            Is this from a restaurant?
+          </label>
+        </div>
+      </div>
+
+      <div className="form-row">
           <div className="form-group">
             <label>Restaurant Name</label>
             <input
               name="restaurant_name"
               placeholder="e.g. That One Place"
               onChange={handleChange}
+              required={isRestaurantDish}
             />
           </div>
         </div>
@@ -89,6 +115,7 @@ function AddDish() {
             name="restaurant_address"
             placeholder="123 Street, City, State"
             onChange={handleChange}
+            required={isRestaurantDish}
           />
         </div>
 
@@ -119,6 +146,21 @@ function AddDish() {
         Add to Gallery
         </button>
       </form>
+
+      {showSuccess && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button 
+              onClick={() => { setShowSuccess(false); navigate("/"); }}
+              style={{ float: 'right', border: 'none', background: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+            >
+              x
+            </button>
+            <h3>Delicious!</h3>
+            <p>Your dish has been added to the gallery.</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
