@@ -142,9 +142,19 @@ function AddDish() {
           />
         </div>
 
-        <button className="submit-button" type="submit">
-        Add to Gallery
-        </button>
+        <div className="form-actions">
+          <button
+            type="button"
+            className="button"
+            onClick={() => navigate("/")}
+          >
+            Cancel
+          </button>
+
+          <button className="button" type="submit">
+            Add to Gallery
+          </button>
+        </div>
       </form>
 
       {showSuccess && (

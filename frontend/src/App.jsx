@@ -15,6 +15,7 @@ export default function App() {
           <Route index element={<Gallery />} />
           <Route path="add-dish" element={<AddDish />} />
           <Route path="*" element={<h1>404 Page Not Found</h1>} />
+          <Route path="/dishes/:id" element={<DishDetail />} />
         </Routes>
       </div>
     </Router>
