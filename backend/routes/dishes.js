@@ -96,5 +96,25 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE a dish
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [result] = await pool.query(
+      "DELETE FROM dishes WHERE id = ?",
+      [id]
+    );
+
+    if (result.affectedRows === 0)
+      return res.status(404).json({ error: "Dish not found" });
+
+    res.json({ message: "Dish deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete dish" });
+  }
+});
+
 
 export default router;
