@@ -1,5 +1,5 @@
 import express from "express";
-import { pool } from "../db.js"; // use the centralized pool
+import { pool } from "../db.js";
 import multer from "multer";
 import path from "path";
 
