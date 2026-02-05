@@ -13,6 +13,16 @@ function AddDish() {
   });
   const [origin, setOrigin] = useState("restaurant");
 
+  useEffect(() => {
+    if (origin === "home") {
+      setFormData((prev) => ({
+        ...prev,
+        restaurant_name: "",
+        restaurant_address: ""
+      }));
+    }
+  }, [origin]);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
