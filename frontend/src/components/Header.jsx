@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -6,7 +7,10 @@ export default function Header() {
   return (
     <header className="header-top">
       <div>
-        <h1><i>That One Dish</i></h1>
+        <div className="title-with-logo">
+          <img src={logo} alt="That One Dish logo" className="header-logo" />
+          <h1><i>That One Dish</i></h1>
+        </div>
 
         <div className="nav-tabs">
           <button className="tab">Personal Page</button>
@@ -14,7 +18,12 @@ export default function Header() {
         </div>
       </div>
 
-      <button className="addDishButton" onClick={() => navigate('/add-dish')}>+</button>
+      <button
+        className="addDishButton"
+        onClick={() => navigate('/add-dish')}
+      >
+        +
+      </button>
     </header>
   );
 }
