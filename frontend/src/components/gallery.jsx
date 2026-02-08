@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Gallery() {
   const [dishes, setDishes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/dishes")
@@ -20,9 +22,11 @@ export default function Gallery() {
 
       <div className="gallery-grid">
         {dishes.map((dish) => (
-          <div key={dish.id} className="dish-card">
-            
-            {/* Image Section */}
+          <div
+            key={dish.id}
+            className="dish-card clickable"
+            onClick={() => navigate(`/dishes/${dish.id}`)}
+          >
             <div className="card-image-container">
               {dish.image_url && (
                 <img
@@ -34,19 +38,13 @@ export default function Gallery() {
               <span className="cuisine-badge">{dish.cuisine || "Tasty"}</span>
             </div>
 
-            {/* Content Section */}
             <div className="card-content">
               <h3 className="dish-name">{dish.dish_name}</h3>
-              
               <p className="restaurant-info">
-                <strong>📍 {dish.restaurant_name}</strong>
+                <strong>{dish.restaurant_name}</strong>
               </p>
-              
-              {/* Address for DB */}
               <p className="restaurant-address">{dish.restaurant_address}</p>
-              
               <hr className="divider" />
-              
               <p className="dish-description">{dish.dish_details}</p>
             </div>
           </div>
