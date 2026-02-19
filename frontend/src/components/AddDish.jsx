@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function AddDish() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,17 @@ function AddDish() {
     restaurant_address: "",
     image: null
   });
+  const [origin, setOrigin] = useState("restaurant");
+
+  useEffect(() => {
+    if (origin === "home") {
+      setFormData((prev) => ({
+        ...prev,
+        restaurant_name: "",
+        restaurant_address: ""
+      }));
+    }
+  }, [origin]);
 
   const navigate = useNavigate();
 
@@ -74,23 +86,54 @@ function AddDish() {
             />
           </div>
           <div className="form-group">
-            <label>Restaurant Name</label>
-            <input
-              name="restaurant_name"
-              placeholder="e.g. That One Place"
-              onChange={handleChange}
-            />
+            <label>Where did you have this dish?</label>
+            <label>
+              <input
+                type="radio"
+                name="origin"
+                value="restaurant"
+                checked={origin === "restaurant"}
+                onChange={() => setOrigin("restaurant")}
+              />
+              At a restaurant
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="origin"
+                value="home"
+                checked={origin === "home"}
+                onChange={() => setOrigin("home")}
+              />
+              Home made
+            </label>
           </div>
         </div>
 
-        <div className="form-group">
-          <label>Restaurant Address</label>
-          <input
-            name="restaurant_address"
-            placeholder="123 Street, City, State"
-            onChange={handleChange}
-          />
-        </div>
+        {origin === "restaurant" && (
+        <>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Restaurant Name</label>
+              <input
+                name="restaurant_name"
+                placeholder="e.g. That One Place"
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Restaurant Address</label>
+            <input
+              name="restaurant_address"
+              placeholder="123 Street, City, State"
+              onChange={handleChange}
+            />
+          </div>
+        </>)}
 
         <div className="form-group">
           <label>Dish Details</label>
