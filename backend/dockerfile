@@ -1,0 +1,20 @@
+# Use Node.js base image
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy backend code
+COPY . .
+
+# Create uploads folder
+RUN mkdir -p uploads
+
+# Expose backend port
+EXPOSE 3000
+
+# Start the backend
+CMD ["npm", "start"]

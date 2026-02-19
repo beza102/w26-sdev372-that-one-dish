@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "Beza102#"
+      MYSQL_DATABASE: that_one_dish
+      # It's better to use the root user for setup, 
+      # but you've also defined a standard user here:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: "Beza102#"
+    ports:
+      - "3307:3306"   # Access from Windows via 3307
+    volumes:
+      - db-data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: backend_app
+    restart: always
+    ports:
+      - "3000:3000"
+    # Overriding .env values specifically for the Docker network
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Beza102#
+      - DB_NAME=that_one_dish
+      - DB_PORT=3306
+    depends_on:
+      - db
+
+volumes:
+  db-data:
