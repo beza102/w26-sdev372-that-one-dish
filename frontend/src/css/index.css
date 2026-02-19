@@ -1,14 +1,3 @@
-.title-with-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.header-logo {
-  width: 120px;
-  height: auto;
-}
-
 /* Global Reset */
 body {
   margin: 0;
@@ -99,16 +88,127 @@ input:focus, textarea:focus {
   border-color: #ff5e6b;
 }
 
-.form-actions {
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+... (101 lines left)
+Collapse
+index.css
+4 KB
+.page {
+  background: #9fb2b4;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+Expand
+createRestaurantDish.css
+2 KB
+﻿
+Liza Khrapach
+lizakhrapach
+ 
+/* Global Reset */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #ffffff;
+}
+
+/* Header & Container Styles */
+.header-top {
   display: flex;
-  gap: 12px;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 15px;
   margin-top: 10px;
 }
 
-.button {
+.tab {
+  padding: 10px 20px;
+  background: #e0e0e0;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.addButton {
+  width: 100px;
+  height: 80px;
+  font-size: 2.5rem;
+  background: #9e9e9e;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* Container for the whole page */
+.add-dish-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.form-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+input, textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #ff5e6b;
+}
+
+.submit-button {
   width: 100%;
   padding: 15px;
-  background-color: #EB8167;
+  background-color: #ff4757;
   color: white;
   border: none;
   border-radius: 8px;
@@ -117,8 +217,8 @@ input:focus, textarea:focus {
   cursor: pointer;
 }
 
-.button:hover {
-  background-color: #B95235;
+.submit-button:hover {
+  background-color: #e84118;
   transform: translateY(-2px);
 }
 
@@ -133,7 +233,7 @@ input:focus, textarea:focus {
   font-size: 2rem;
   color: #333;
   margin-bottom: 30px;
-  border-left: 5px solid #B95235;
+  border-left: 5px solid #ff4757;
   padding-left: 15px;
 }
 
@@ -157,10 +257,6 @@ input:focus, textarea:focus {
   transform: translateY(-10px);
 }
 
-.dish-card.clickable {
-  cursor: pointer;
-}
-
 /* Image Section */
 .card-image-container {
   position: relative;
@@ -178,7 +274,7 @@ input:focus, textarea:focus {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #EB8167;
+  background: rgba(255, 71, 87, 0.9);
   color: white;
   padding: 5px 12px;
   border-radius: 20px;
@@ -200,7 +296,7 @@ input:focus, textarea:focus {
 .restaurant-info {
   margin: 0;
   font-size: 0.95rem;
-  color: #EB8167;
+  color: #ff4757;
 }
 
 .restaurant-address {
@@ -221,46 +317,3 @@ input:focus, textarea:focus {
   color: #444;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #dee5df;
-  padding: 30px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(49, 49, 49, 0.3);
-  max-width: 400px;
-  width: 80%;
-}
-
-.success-icon {
-  font-size: 50px;
-  margin-bottom: 15px;
-}
-
-.modal-content h3 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.modal-content p {
-  color: #666;
-}
-
-.checkbox-group {
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  padding: 10px;
-}
