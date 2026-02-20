@@ -1,9 +1,3 @@
-
-
-
-   
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -11,23 +5,28 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
-
+    environment:
+      - VITE_API_URL=http://localhost:3000
 
   db:
-    image: mysql:8
+    image: mariadb:10.11 
     container_name: mysql_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "Beza102#"
-      MYSQL_DATABASE: that_one_dish
-      # It's better to use the root user for setup, 
-      # but you've also defined a standard user here:
-      MYSQL_USER: user
-      MYSQL_PASSWORD: "Beza102#"
+
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} 
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "3307:3306"   # Access from Windows via 3307
+      - "3307:3306"
     volumes:
       - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   backend:
     build: ./backend
@@ -35,16 +34,14 @@ services:
     restart: always
     ports:
       - "3000:3000"
-    # Overriding .env values specifically for the Docker network
+    env_file:
+      - ./backend/.env
     environment:
       - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=Beza102#
-      - DB_NAME=that_one_dish
       - DB_PORT=3306
     depends_on:
-      - db
+      db:
+        condition: service_healthy 
 
 volumes:
   db-data:
-
