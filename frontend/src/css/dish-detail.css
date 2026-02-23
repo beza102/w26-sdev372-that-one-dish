@@ -43,6 +43,25 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Placeholder / upload preview box used in edit mode */
+.image-box {
+  width: 180px;
+  height: 180px;
+  background: #e0e0e0;
+  border-radius: 20px;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.image-box.placeholder {
+  font-size: 48px;
+  color: #777;
+}
+
 /* Dish Actions (View Mode) */
 .dish-actions {
   display: flex;

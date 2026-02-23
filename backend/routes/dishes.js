@@ -2,6 +2,7 @@ import express from "express";
 import { pool } from "../db.js";
 import multer from "multer";
 import path from "path";
+import fs from "fs";
 
 const router = express.Router();
 
@@ -72,26 +73,46 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-// PUT to update a dish
-router.put("/:id", async (req, res) => {
+// PUT to update a dish (with optional image upload)
+router.put("/:id", upload.single("image"), async (req, res) => {
   const { id } = req.params;
   const { dish_name, cuisine, dish_details, restaurant_name, restaurant_address } = req.body;
 
-  const sql = `
-    UPDATE dishes
-    SET dish_name=?, cuisine=?, dish_details=?, restaurant_name=?, restaurant_address=?
-    WHERE id=?
-  `;
-
   try {
-    const [result] = await pool.query(sql, [
-      dish_name,
-      cuisine,
-      dish_details,
-      restaurant_name,
-      restaurant_address,
-      id,
-    ]);
+    // If a new image is provided, use it; otherwise keep the existing one
+    let image_url = undefined;
+    if (req.file) {
+      image_url = `/uploads/${req.file.filename}`;
+      // Get the old image URL to delete the old file
+      const [oldDish] = await pool.query("SELECT image_url FROM dishes WHERE id = ?", [id]);
+      if (oldDish.length > 0 && oldDish[0].image_url) {
+        const oldFilePath = path.join(process.cwd(), oldDish[0].image_url);
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+        }
+      }
+    }
+
+    let sql;
+    let params;
+
+    if (image_url !== undefined) {
+      sql = `
+        UPDATE dishes
+        SET dish_name=?, cuisine=?, dish_details=?, restaurant_name=?, restaurant_address=?, image_url=?
+        WHERE id=?
+      `;
+      params = [dish_name, cuisine, dish_details, restaurant_name, restaurant_address, image_url, id];
+    } else {
+      sql = `
+        UPDATE dishes
+        SET dish_name=?, cuisine=?, dish_details=?, restaurant_name=?, restaurant_address=?
+        WHERE id=?
+      `;
+      params = [dish_name, cuisine, dish_details, restaurant_name, restaurant_address, id];
+    }
+
+    const [result] = await pool.query(sql, params);
 
     if (result.affectedRows === 0) return res.status(404).json({ error: "Dish not found" });
 

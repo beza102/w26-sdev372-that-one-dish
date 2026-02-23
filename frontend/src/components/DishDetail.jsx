@@ -7,6 +7,7 @@ export default function DishDetail() {
   const [dish, setDish] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
+  const [imagePreview, setImagePreview] = useState(null);
 
   // Fetch dish data when component mounts
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function DishDetail() {
           restaurant_name: data.restaurant_name,
           restaurant_address: data.restaurant_address,
         });
+        setImagePreview(data.image_url ? `http://localhost:3000${data.image_url}` : null);
       })
       .catch((err) => console.error("Error fetching dish:", err));
   }, [id]);
@@ -32,22 +34,47 @@ export default function DishDetail() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    setFormData({ ...formData, image: file });
+    setImagePreview(URL.createObjectURL(file));
+  };
+
   // Save edited dish
   const handleSave = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      let res;
+      // If a new image File is present, send multipart/form-data
+      if (formData.image && formData.image instanceof File) {
+        const payload = new FormData();
+        payload.append('dish_name', formData.dish_name || '');
+        payload.append('cuisine', formData.cuisine || '');
+        payload.append('dish_details', formData.dish_details || '');
+        payload.append('restaurant_name', formData.restaurant_name || '');
+        payload.append('restaurant_address', formData.restaurant_address || '');
+        payload.append('image', formData.image);
 
-      if (!res.ok) throw new Error("Failed to update dish");
+        res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
+          method: 'PUT',
+          body: payload,
+        });
+      } else {
+        res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+      }
+
+      if (!res.ok) throw new Error('Failed to update dish');
       const updatedDish = await res.json();
       setDish(updatedDish);
       setIsEditing(false);
+      setImagePreview(updatedDish.image_url ? `http://localhost:3000${updatedDish.image_url}` : null);
     } catch (err) {
       console.error(err);
-      alert("Error updating dish");
+      alert('Error updating dish');
     }
   };
 
@@ -71,14 +98,25 @@ export default function DishDetail() {
       {isEditing ? (
         <div className="dish-edit-form">
           <h2>Edit Dish</h2>
+
+          <label>Upload Photo</label>
+          {imagePreview ? (
+            <img src={imagePreview} alt="Preview" className="dish-image" />
+          ) : (
+            <div className="image-box placeholder">+</div>
+          )}
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+
           <label>Dish Name</label>
           <input
             name="dish_name"
             value={formData.dish_name}
             onChange={handleChange}
           />
+
           <label>Cuisine</label>
           <input name="cuisine" value={formData.cuisine} onChange={handleChange} />
+
           <label>Dish Details</label>
           <textarea
             name="dish_details"
@@ -106,10 +144,6 @@ export default function DishDetail() {
       ) : (
         <div className="dish-view">
           <h2>{dish.dish_name}</h2>
-          <p><strong>Cuisine:</strong> {dish.cuisine}</p>
-          <p><strong>Details:</strong> {dish.dish_details}</p>
-          <p><strong>Restaurant:</strong> {dish.restaurant_name}</p>
-          <p><strong>Address:</strong> {dish.restaurant_address}</p>
           {dish.image_url && (
             <img
               src={`http://localhost:3000${dish.image_url}`}
@@ -117,6 +151,11 @@ export default function DishDetail() {
               className="dish-image"
             />
           )}
+          <p><strong>Cuisine:</strong> {dish.cuisine}</p>
+          <p><strong>Details:</strong> {dish.dish_details}</p>
+          <p><strong>Restaurant:</strong> {dish.restaurant_name}</p>
+          <p><strong>Address:</strong> {dish.restaurant_address}</p>
+        
 
           <div className="dish-actions">
             <button onClick={() => setIsEditing(true)}>Edit</button>
