@@ -195,7 +195,6 @@ function AddDish() {
           <div className="modal-content">
             <button
               onClick={() => navigate("/")}
-              style={{ float: 'right', border: 'none', background: 'none', cursor: 'pointer' }}
             >
               x
             </button>
