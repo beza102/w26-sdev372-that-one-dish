@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function AddDish() {
   const [formData, setFormData] = useState({
@@ -11,33 +12,53 @@ function AddDish() {
     image: null
   });
 
+  const [origin, setOrigin] = useState("restaurant");
+
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const [isRestaurantDish, setIsRestaurantDish] = useState(false);
+  useEffect(() => {
+    if (origin === "home") {
+      setFormData((prev) => ({
+        ...prev,
+        restaurant_name: "",
+        restaurant_address: ""
+      }));
+    }
+  }, [origin]);
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    if (e.target.name === "image") {
+      setFormData({
+        ...formData,
+        image: e.target.files[0]
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formPayload = new FormData();
+
     formPayload.append("dish_name", formData.dish_name);
     formPayload.append("cuisine", formData.cuisine);
     formPayload.append("dish_details", formData.dish_details);
     formPayload.append("restaurant_name", formData.restaurant_name);
     formPayload.append("restaurant_address", formData.restaurant_address);
+
     if (formData.image) {
       formPayload.append("image", formData.image);
     }
 
     try {
+
       const res = await fetch("http://localhost:3000/api/dishes", {
         method: "POST",
         body: formPayload
@@ -58,7 +79,6 @@ function AddDish() {
     }
   };
 
-  
   return (
     <div className="add-dish-container">
       <h2 className="form-title">Add a New Favorite Dish</h2>
@@ -84,40 +104,55 @@ function AddDish() {
             />
           </div>
 
-        <div className="form-group checkbox-group">
-          <label style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
-            <input 
-              type="checkbox" 
-              checked={isRestaurantDish} 
-              onChange={(e) => setIsRestaurantDish(e.target.checked)} 
-              style={{ width: '18px', height: '18px' }}
-            />
-            Is this from a restaurant?
-          </label>
-        </div>
-      </div>
-
-      <div className="form-row">
           <div className="form-group">
-            <label>Restaurant Name</label>
-            <input
-              name="restaurant_name"
-              placeholder="e.g. That One Place"
-              onChange={handleChange}
-              required={isRestaurantDish}
-            />
+            <label>Where did you have this dish?</label>
+
+            <label>
+              <input
+                type="radio"
+                value="restaurant"
+                checked={origin === "restaurant"}
+                onChange={() => setOrigin("restaurant")}
+              />
+              At a restaurant
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                value="home"
+                checked={origin === "home"}
+                onChange={() => setOrigin("home")}
+              />
+              Home made
+            </label>
+
           </div>
+
         </div>
 
-        <div className="form-group">
-          <label>Restaurant Address</label>
-          <input
-            name="restaurant_address"
-            placeholder="123 Street, City, State"
-            onChange={handleChange}
-            required={isRestaurantDish}
-          />
-        </div>
+        {origin === "restaurant" && (
+          <>
+            <div className="form-group">
+              <label>Restaurant Name</label>
+              <input
+                name="restaurant_name"
+                placeholder="e.g. That One Place"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Restaurant Address</label>
+              <input
+                name="restaurant_address"
+                placeholder="123 Street, City, State"
+                onChange={handleChange}
+              />
+            </div>
+          </>
+        )}
 
         <div className="form-group">
           <label>Dish Details</label>
@@ -136,9 +171,7 @@ function AddDish() {
             name="image"
             accept="image/*"
             className="file-input"
-            onChange={(e) =>
-              setFormData({ ...formData, image: e.target.files[0] })
-            }
+            onChange={handleChange}
           />
         </div>
 
@@ -160,9 +193,9 @@ function AddDish() {
       {showSuccess && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button 
-              onClick={() => { setShowSuccess(false); navigate("/"); }}
-              style={{ float: 'right', border: 'none', background: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+            <button
+              onClick={() => navigate("/")}
+              style={{ float: 'right', border: 'none', background: 'none', cursor: 'pointer' }}
             >
               x
             </button>
