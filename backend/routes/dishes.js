@@ -76,7 +76,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 // PUT to update a dish (with optional image upload)
 router.put("/:id", upload.single("image"), async (req, res) => {
   const { id } = req.params;
-  const { dish_name, cuisine, dish_details, restaurant_name, restaurant_address } = req.body;
+  const { dish_name, cuisine, dish_details, restaurant_name, restaurant_address, origin } = req.body;
 
   try {
     // If a new image is provided, use it; otherwise keep the existing one
@@ -99,17 +99,17 @@ router.put("/:id", upload.single("image"), async (req, res) => {
     if (image_url !== undefined) {
       sql = `
         UPDATE dishes
-        SET dish_name=?, cuisine=?, dish_details=?, restaurant_name=?, restaurant_address=?, image_url=?
+        SET dish_name=?, cuisine=?, dish_details=?, restaurant_name=?, restaurant_address=?, image_url=?, origin=?
         WHERE id=?
       `;
-      params = [dish_name, cuisine, dish_details, restaurant_name, restaurant_address, image_url, id];
+      params = [dish_name, cuisine, dish_details, restaurant_name, restaurant_address, image_url, origin || 'restaurant', id];
     } else {
       sql = `
         UPDATE dishes
-        SET dish_name=?, cuisine=?, dish_details=?, restaurant_name=?, restaurant_address=?
+        SET dish_name=?, cuisine=?, dish_details=?, restaurant_name=?, restaurant_address=?, origin=?
         WHERE id=?
       `;
-      params = [dish_name, cuisine, dish_details, restaurant_name, restaurant_address, id];
+      params = [dish_name, cuisine, dish_details, restaurant_name, restaurant_address, origin || 'restaurant', id];
     }
 
     const [result] = await pool.query(sql, params);

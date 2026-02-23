@@ -21,6 +21,7 @@ export default function DishDetail() {
           dish_details: data.dish_details,
           restaurant_name: data.restaurant_name,
           restaurant_address: data.restaurant_address,
+          origin: data.origin || 'restaurant'
         });
         setImagePreview(data.image_url ? `http://localhost:3000${data.image_url}` : null);
       })
@@ -53,6 +54,7 @@ export default function DishDetail() {
         payload.append('dish_details', formData.dish_details || '');
         payload.append('restaurant_name', formData.restaurant_name || '');
         payload.append('restaurant_address', formData.restaurant_address || '');
+        payload.append('origin', formData.origin || 'restaurant');
         payload.append('image', formData.image);
 
         res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
@@ -63,7 +65,7 @@ export default function DishDetail() {
         res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, origin: formData.origin || 'restaurant' }),
         });
       }
 
@@ -123,18 +125,45 @@ export default function DishDetail() {
             value={formData.dish_details}
             onChange={handleChange}
           />
-          <label>Restaurant Name</label>
-          <input
-            name="restaurant_name"
-            value={formData.restaurant_name}
-            onChange={handleChange}
-          />
-          <label>Restaurant Address</label>
-          <input
-            name="restaurant_address"
-            value={formData.restaurant_address}
-            onChange={handleChange}
-          />
+
+          <label>Dish Type</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="restaurant"
+                checked={formData.origin === 'restaurant'}
+                onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
+              />
+              Restaurant
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="home"
+                checked={formData.origin === 'home'}
+                onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
+              />
+              Home Made
+            </label>
+          </div>
+
+          {formData.origin === 'restaurant' && (
+            <>
+              <label>Restaurant Name</label>
+              <input
+                name="restaurant_name"
+                value={formData.restaurant_name}
+                onChange={handleChange}
+              />
+              <label>Restaurant Address</label>
+              <input
+                name="restaurant_address"
+                value={formData.restaurant_address}
+                onChange={handleChange}
+              />
+            </>
+          )}
 
           <div className="form-actions">
             <button onClick={handleSave}>Save</button>
@@ -153,8 +182,13 @@ export default function DishDetail() {
           )}
           <p><strong>Cuisine:</strong> {dish.cuisine}</p>
           <p><strong>Details:</strong> {dish.dish_details}</p>
-          <p><strong>Restaurant:</strong> {dish.restaurant_name}</p>
-          <p><strong>Address:</strong> {dish.restaurant_address}</p>
+          <p><strong>Type:</strong> {dish.origin === 'home' ? 'Home Made' : 'Restaurant'}</p>
+          {dish.origin === 'restaurant' && (
+            <>
+              <p><strong>Restaurant:</strong> {dish.restaurant_name}</p>
+              <p><strong>Address:</strong> {dish.restaurant_address}</p>
+            </>
+          )}
         
 
           <div className="dish-actions">
