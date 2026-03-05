@@ -53,7 +53,7 @@ describe("AddDish", () => {
     await user.click(screen.getByRole("button", { name: /Add to Gallery/i }));
 
     expect(alert).toHaveBeenCalledWith(
-      "Error adding dish. Check if backend is running on port 5000!"
+      "Error adding dish. Check if backend is running on port 3000!"
     );
 
     consoleSpy.mockRestore(); // restore normal behavior after test
