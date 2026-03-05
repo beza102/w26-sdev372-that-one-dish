@@ -39,6 +39,9 @@ describe("AddDish", () => {
   it("shows error if request fails", async () => {
     fetch.mockResolvedValueOnce({ ok: false });
 
+    // Suppress console.error for this test
+    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
     const user = userEvent.setup();
     render(
       <MemoryRouter>
@@ -52,5 +55,7 @@ describe("AddDish", () => {
     expect(alert).toHaveBeenCalledWith(
       "Error adding dish. Check if backend is running on port 5000!"
     );
+
+    consoleSpy.mockRestore(); // restore normal behavior after test
   });
 });
