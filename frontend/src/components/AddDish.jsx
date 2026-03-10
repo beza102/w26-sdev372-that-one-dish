@@ -11,11 +11,7 @@ function AddDish() {
     restaurant_address: "",
     image: null
   });
-
   const [origin, setOrigin] = useState("restaurant");
-
-  const [showSuccess, setShowSuccess] = useState(false);
-
   useEffect(() => {
     if (origin === "home") {
       setFormData((prev) => ({
@@ -66,16 +62,11 @@ function AddDish() {
 
       if (!res.ok) throw new Error("Failed to add dish");
 
-      setShowSuccess(true);
-
-      setTimeout(() => {
-        setShowSuccess(false);
-        navigate("/");
-      }, 2000);
-
+      alert("Dish added successfully!");
+      navigate("/");
     } catch (err) {
       console.error(err);
-      alert("Error adding dish");
+      alert("Error adding dish. Check if backend is running on port 3000!");
     }
   };
 
@@ -103,13 +94,14 @@ function AddDish() {
               onChange={handleChange}
             />
           </div>
+<<<<<<< HEAD
 
           <div className="form-group">
             <label>Where did you have this dish?</label>
-
             <label>
               <input
                 type="radio"
+                name="origin"
                 value="restaurant"
                 checked={origin === "restaurant"}
                 onChange={() => setOrigin("restaurant")}
@@ -120,13 +112,13 @@ function AddDish() {
             <label>
               <input
                 type="radio"
+                name="origin"
                 value="home"
                 checked={origin === "home"}
                 onChange={() => setOrigin("home")}
               />
               Home made
             </label>
-
           </div>
 
         </div>
@@ -142,7 +134,6 @@ function AddDish() {
                 required
               />
             </div>
-
             <div className="form-group">
               <label>Restaurant Address</label>
               <input
@@ -175,34 +166,10 @@ function AddDish() {
           />
         </div>
 
-        <div className="form-actions">
-          <button
-            type="button"
-            className="button"
-            onClick={() => navigate("/")}
-          >
-            Cancel
-          </button>
-
-          <button className="button" type="submit">
-            Add to Gallery
-          </button>
-        </div>
+        <button className="submit-button" type="submit">
+        Add to Gallery
+        </button>
       </form>
-
-      {showSuccess && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button
-              onClick={() => navigate("/")}
-            >
-              x
-            </button>
-            <h3>Delicious!</h3>
-            <p>Your dish has been added to the gallery.</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
