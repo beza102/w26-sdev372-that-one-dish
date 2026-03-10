@@ -94,7 +94,6 @@ function AddDish() {
               onChange={handleChange}
             />
           </div>
-<<<<<<< HEAD
 
           <div className="form-group">
             <label>Where did you have this dish?</label>

@@ -9,7 +9,6 @@
 .form-actions button:hover {
   background-color: #B95235;
   transform: translateY(-2px);
-}
   outline: none;
   border-color: #ff5e6b;
 }
@@ -231,5 +230,3 @@ input:focus, textarea:focus {
   line-height: 1.5;
   color: #444;
 }
-
->>>>>>> upstream/main
