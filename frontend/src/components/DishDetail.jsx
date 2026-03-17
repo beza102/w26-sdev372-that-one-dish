@@ -5,6 +5,7 @@ export default function DishDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [dish, setDish] = useState(null);
+  const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
@@ -12,7 +13,10 @@ export default function DishDetail() {
   // Fetch dish data when component mounts
   useEffect(() => {
     fetch(`http://localhost:3000/api/dishes/${id}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server returned ${res.status}`);
+        return res.json();
+      })
       .then((data) => {
         setDish(data);
         setFormData({
@@ -25,9 +29,13 @@ export default function DishDetail() {
         });
         setImagePreview(data.image_url ? `http://localhost:3000${data.image_url}` : null);
       })
-      .catch((err) => console.error("Error fetching dish:", err));
+      .catch((err) => {
+        console.error("Error fetching dish:", err);
+        setError(err.message);
+      });
   }, [id]);
 
+  if (error) return <p>Error loading dish: {error}</p>;
   if (!dish) return <p>Loading...</p>;
 
   // Handle form changes in edit mode
