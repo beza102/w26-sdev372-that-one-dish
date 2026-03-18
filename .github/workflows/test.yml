@@ -49,7 +49,7 @@ jobs:
 
       - name: Run frontend unit tests
 
-        run: npm test -- --testPathPattern "(AddDish|Gallery|Header)\.test"
+        run: npm test -- --testPathPatterns "(AddDish|Gallery|Header)\.test"
 
 
   integration-tests:
@@ -72,7 +72,7 @@ jobs:
 
       - name: Run integration tests
 
-        run: npm test -- --testPathPattern "Integration\.test"
+        run: npm test -- --testPathPatterns "Integration\.test"
 
   
 
