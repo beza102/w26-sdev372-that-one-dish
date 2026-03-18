@@ -67,6 +67,8 @@ describe("App Integration", () => {
 
     await user.type(screen.getByPlaceholderText(/Cheese Burger/i), "Burger");
 
+    await user.type(screen.getByPlaceholderText(/That One Place/i), "Test Restaurant");
+
     await user.click(screen.getByRole("button", { name: /Add to Gallery/i }));
 
     await waitFor(() =>

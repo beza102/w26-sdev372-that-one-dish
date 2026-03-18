@@ -46,9 +46,6 @@
       "<rootDir>/src/setupTests.js"
     ],
     "testEnvironment": "jest-environment-jsdom",
-    "moduleNameMapper": {
-      "^\\.\\./components/(.*)$": "<rootDir>/src/components/$1"
-    },
     "transform": {
       "^.+\\.[jt]sx?$": "babel-jest"
     },
