@@ -6,9 +6,9 @@ import { MemoryRouter, Routes, Route } from "react-router-dom";
 global.fetch = jest.fn();
 global.alert = jest.fn();
 
-import Header from "../components/Header.jsx";
-import Gallery from "../components/Gallery.jsx";
-import AddDish from "../components/AddDish.jsx";
+import Header from "../components/Header";
+import Gallery from "../components/Gallery";
+import AddDish from "../components/AddDish";
 
 describe("App Integration", () => {
 

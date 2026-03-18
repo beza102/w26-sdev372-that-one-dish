@@ -1,7 +1,7 @@
 import { jest, describe, it, expect, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Header from "../components/Header.jsx";
+import Header from "../components/Header";
 import { MemoryRouter } from "react-router-dom";
 
 // Mock useNavigate
