@@ -2,9 +2,9 @@ name: Run Tests
 
 on:
   push:
-    branches: [main, feature]
+    branches: [main, dev, feature]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   backend-unit-tests:
@@ -47,7 +47,7 @@ jobs:
         run: npm install
 
       - name: Run frontend unit tests
-        run: npm test -- --testPathPattern="(AddDish|Gallery|Header)\.test"
+        run: npm test -- --testPathPatterns="(AddDish|Gallery|Header)\.test"
 
   integration-tests:
     name: Integration Tests
@@ -68,7 +68,7 @@ jobs:
         run: npm install
 
       - name: Run integration tests
-        run: npm test -- --testPathPattern="Integration\.test"
+        run: npm test -- --testPathPatterns="Integration\.test"
 
   e2e-tests:
     name: End-to-End Tests
