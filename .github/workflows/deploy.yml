@@ -2,7 +2,7 @@ name: Deploy That One Dish
 
 on:
   workflow_run:
-    workflows: ["Run Tests"] # Ensure your teammate's test file has 'name: Tests' at the top
+    workflows: ["Run Tests"] 
     types: [completed]
     branches: [main]
 
