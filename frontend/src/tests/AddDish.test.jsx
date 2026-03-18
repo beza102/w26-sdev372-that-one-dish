@@ -32,6 +32,9 @@ describe("AddDish", () => {
     );
 
     await user.type(screen.getByPlaceholderText(/Cheese Burger/i), "Burger");
+    // Filling out required Restaurant Name to ensure form validation passes
+    await user.type(screen.getByPlaceholderText(/e.g. That One Place/i), "The Burger Joint");
+    
     await user.click(screen.getByRole("button", { name: /Add to Gallery/i }));
 
     await waitFor(() => {
@@ -55,6 +58,9 @@ describe("AddDish", () => {
     );
 
     await user.type(screen.getByPlaceholderText(/Cheese Burger/i), "Burger");
+    // Filling out required Restaurant Name to ensure form validation passes
+    await user.type(screen.getByPlaceholderText(/e.g. That One Place/i), "The Burger Joint");
+
     await user.click(screen.getByRole("button", { name: /Add to Gallery/i }));
 
     await waitFor(() => {
