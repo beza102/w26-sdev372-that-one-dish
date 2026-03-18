@@ -1,8 +1,11 @@
 import { jest, describe, it, expect, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import AddDish from "../components/AddDish";
+import AddDish from "../components/AddDish.jsx";
 import { MemoryRouter } from "react-router-dom";
+
+global.fetch = jest.fn();
+global.alert = jest.fn();
 
 // Mock navigate
 const mockNavigate = jest.fn();

@@ -1,6 +1,8 @@
-import { describe, it, expect, beforeEach } from "@jest/globals";
+import { describe, it, expect, beforeEach, jest } from "@jest/globals";
 import { render, screen, waitFor } from "@testing-library/react";
-import Gallery from "../components/Gallery";
+import Gallery from "../components/Gallery.jsx";
+
+global.fetch = jest.fn();
 
 describe("Gallery", () => {
   beforeEach(() => {
