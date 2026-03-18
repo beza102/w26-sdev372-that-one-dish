@@ -47,7 +47,7 @@ jobs:
         run: npm install
 
       - name: Run frontend unit tests
-        run: npm test -- --testPathPattern="(AddDish|Gallery|Header)\.test"
+        run: npm test -- --testPathPattern "(AddDish|Gallery|Header)\.test"
 
   integration-tests:
     name: Integration Tests
@@ -68,7 +68,7 @@ jobs:
         run: npm install
 
       - name: Run integration tests
-        run: npm test -- --testPathPattern="Integration\.test"
+        run: npm test -- --testPathPattern "Integration\.test"
 
   e2e-tests:
     name: End-to-End Tests
