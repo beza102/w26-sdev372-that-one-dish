@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Gallery() {
   const [dishes, setDishes] = useState([]);
@@ -20,7 +21,8 @@ export default function Gallery() {
 
       <div className="gallery-grid">
         {dishes.map((dish) => (
-          <div key={dish.id} className="dish-card">
+          <Link key={dish.id} to={`/dishes/${dish.id}`} style={{ textDecoration: 'none' }}>
+            <div className="dish-card">
             
             {/* Image Section */}
             <div className="card-image-container">
@@ -49,7 +51,8 @@ export default function Gallery() {
               
               <p className="dish-description">{dish.dish_details}</p>
             </div>
-          </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

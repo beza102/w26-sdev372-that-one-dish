@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 function AddDish() {
   const [formData, setFormData] = useState({
@@ -12,6 +12,8 @@ function AddDish() {
     image: null
   });
   const [origin, setOrigin] = useState("restaurant");
+  const fileInputRef = useRef(null);
+  
   useEffect(() => {
     if (origin === "home") {
       setFormData((prev) => ({
@@ -155,12 +157,19 @@ function AddDish() {
         </div>
 
         <div className="form-group">
-          <label>Upload Image</label>
+          <label style={{ textAlign: "center" }}>Upload Photo</label>
+          <div 
+            className="image-box"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <span className="placeholder">+</span>
+          </div>
           <input
+            ref={fileInputRef}
             type="file"
             name="image"
             accept="image/*"
-            className="file-input"
+            style={{ display: "none" }}
             onChange={handleChange}
           />
         </div>

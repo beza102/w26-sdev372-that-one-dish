@@ -30,6 +30,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET a single dish by ID
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await pool.query("SELECT * FROM dishes WHERE id = ?", [id]);
+    if (rows.length === 0)
+      return res.status(404).json({ error: "Dish not found" });
+    res.json(rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database query failed" });
+  }
+});
+
 // POST a new dish
 router.post("/", upload.single("image"), async (req, res) => {
   const { dish_name, cuisine, dish_details, restaurant_name, restaurant_address } =
@@ -104,7 +118,8 @@ router.put("/:id", upload.single("image"), async (req, res) => {
     if (result.affectedRows === 0)
       return res.status(404).json({ error: "Dish not found" });
 
-    res.json({ message: "Dish updated" });
+    const [updated] = await pool.query("SELECT * FROM dishes WHERE id = ?", [id]);
+    res.json(updated[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to update dish" });

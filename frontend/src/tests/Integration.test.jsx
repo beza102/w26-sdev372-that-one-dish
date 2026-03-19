@@ -1,7 +1,10 @@
-import { describe, it, expect, beforeEach, afterEach } from "@jest/globals";
+import { jest, describe, it, expect, beforeEach, afterEach } from "@jest/globals";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+
+global.fetch = jest.fn();
+global.alert = jest.fn();
 
 import Header from "../components/Header";
 import Gallery from "../components/Gallery";
@@ -63,6 +66,8 @@ describe("App Integration", () => {
     );
 
     await user.type(screen.getByPlaceholderText(/Cheese Burger/i), "Burger");
+
+    await user.type(screen.getByPlaceholderText(/That One Place/i), "Test Restaurant");
 
     await user.click(screen.getByRole("button", { name: /Add to Gallery/i }));
 
