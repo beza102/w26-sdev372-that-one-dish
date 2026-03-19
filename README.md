@@ -79,3 +79,7 @@ and personal notes.
 recipe).
 6. The user saves the entry.
 7. The dish appears in the user’s gallery view.
+
+## CI/CD Pipeline
+-Testing: Every push to `main` or `feature` triggers Jest tests for Backend and Frontend.
+-Deployment: Successful merges to `main` trigger an automated deployment to an Orange Pi via Tailscale SSH.
