@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function DishDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [dish, setDish] = useState(null);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -109,13 +110,27 @@ export default function DishDetail() {
         <div className="dish-edit-form">
           <h2>Edit Dish</h2>
 
-          <label>Upload Photo</label>
-          {imagePreview ? (
-            <img src={imagePreview} alt="Preview" className="dish-image" />
-          ) : (
-            <div className="image-box placeholder">+</div>
-          )}
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <div className="form-group">
+            <label className="label-center">Upload Photo</label>
+            <div 
+              className="image-box"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {imagePreview ? (
+                <img src={imagePreview} alt="Preview" />
+              ) : (
+                <span className="placeholder">+</span>
+              )}
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              name="image"
+              accept="image/*"
+              className="hidden-input"
+              onChange={handleImageChange}
+            />
+          </div>
 
           <label>Dish Name</label>
           <input

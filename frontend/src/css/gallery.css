@@ -76,6 +76,11 @@
   font-size: 1.4rem;
 }
 
+.gallery-link {
+  text-decoration: none;
+  color: black;
+}
+
 .restaurant-info {
   margin: 0;
   font-size: 0.95rem;
