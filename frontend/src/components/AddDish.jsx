@@ -11,6 +11,7 @@ function AddDish() {
     restaurant_address: "",
     image: null
   });
+  const [imagePreview, setImagePreview] = useState(null);
   const [origin, setOrigin] = useState("restaurant");
   const fileInputRef = useRef(null);
   
@@ -28,10 +29,15 @@ function AddDish() {
 
   const handleChange = (e) => {
     if (e.target.name === "image") {
+      const file = e.target.files[0];
       setFormData({
         ...formData,
-        image: e.target.files[0]
+        image: file
       });
+      if (file) {
+        const previewUrl = URL.createObjectURL(file);
+        setImagePreview(previewUrl);
+      }
     } else {
       setFormData({
         ...formData,
@@ -162,7 +168,11 @@ function AddDish() {
             className="image-box"
             onClick={() => fileInputRef.current?.click()}
           >
-            <span className="placeholder">+</span>
+            {imagePreview ? (
+              <img src={imagePreview} alt="Preview" />
+            ) : (
+              <span className="placeholder">+</span>
+            )}
           </div>
           <input
             ref={fileInputRef}
