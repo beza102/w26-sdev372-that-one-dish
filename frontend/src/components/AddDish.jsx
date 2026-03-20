@@ -84,6 +84,28 @@ function AddDish() {
 
       <form onSubmit={handleSubmit} className="dish-form">
         <div className="form-group">
+          <label style={{ textAlign: "center" }}>Upload Photo</label>
+          <div 
+            className="image-box"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            {imagePreview ? (
+              <img src={imagePreview} alt="Preview" />
+            ) : (
+              <span className="placeholder">+</span>
+            )}
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            name="image"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
           <label>Dish Name</label>
           <input
             name="dish_name"
@@ -159,28 +181,6 @@ function AddDish() {
             placeholder="What makes this dish so good?"
             onChange={handleChange}
             rows="4"
-          />
-        </div>
-
-        <div className="form-group">
-          <label style={{ textAlign: "center" }}>Upload Photo</label>
-          <div 
-            className="image-box"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            {imagePreview ? (
-              <img src={imagePreview} alt="Preview" />
-            ) : (
-              <span className="placeholder">+</span>
-            )}
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            name="image"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleChange}
           />
         </div>
 
