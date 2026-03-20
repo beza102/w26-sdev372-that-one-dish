@@ -41,7 +41,8 @@
 .form-actions {
   display: flex;
   gap: 12px;
-  margin-top: 10px;
+  margin-top: 20px;
+  justify-content: center;
 }
 
 /* Button Styling */
@@ -56,6 +57,22 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.button-secondary {
+  padding: 8px 16px;
+  background-color: #d0d0d0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-secondary:hover {
+  background-color: #b8b8b8;
 }
 
 .button:hover {

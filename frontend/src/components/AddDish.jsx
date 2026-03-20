@@ -184,9 +184,14 @@ function AddDish() {
           />
         </div>
 
-        <button className="submit-button" type="submit">
-        Add to Gallery
-        </button>
+        <div className="form-actions">
+          <button className="button-secondary" type="button" onClick={() => navigate("/")}>
+            Cancel
+          </button>
+          <button className="submit-button" type="submit">
+            Add to Gallery
+          </button>
+        </div>
       </form>
     </div>
   );
