@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import DishImage from "../../public/DishImage.png";
+import PlusIcon from "../../public/PlusIcon.png";
 
 function AddDish() {
   const [formData, setFormData] = useState({
@@ -92,7 +94,10 @@ function AddDish() {
             {imagePreview ? (
               <img src={imagePreview} alt="Preview" />
             ) : (
-              <span className="placeholder">+</span>
+              <div className="placeholder-container">
+                <img src={PlusIcon} alt="Plus Icon" className="placeholder" />
+                <img src={DishImage} alt="Placeholder" className="placeholder-image" />
+              </div>
             )}
           </div>
           <input
