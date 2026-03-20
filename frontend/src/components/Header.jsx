@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import HeaderLogo from '../../public/Header.png';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -6,7 +7,7 @@ export default function Header() {
   return (
     <header className="header-top">
       <div>
-        <h1><i>That One Dish</i></h1>
+        <img src={HeaderLogo} alt="That One Dish" className="header-logo" />
 
         <div className="nav-tabs">
           <button className="tab">Personal Page</button>
