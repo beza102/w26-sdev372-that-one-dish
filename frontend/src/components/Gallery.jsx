@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Icon from "../../public/Icon.png";
 
 export default function Gallery() {
   const [dishes, setDishes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/dishes")
@@ -55,6 +57,10 @@ export default function Gallery() {
           </Link>
         ))}
       </div>
+
+      <button className="floating-add-button" onClick={() => navigate('/add-dish')}>
+        <img src={Icon} alt="Add Dish" className="floating-button-icon" />
+      </button>
     </div>
   );
 }

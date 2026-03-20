@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import PlusIcon from "../../public/PlusIcon.png";
+import DishImage from "../../public/DishImage.png";
 
 export default function DishDetail() {
   const { id } = useParams();
@@ -119,7 +121,10 @@ export default function DishDetail() {
               {imagePreview ? (
                 <img src={imagePreview} alt="Preview" />
               ) : (
-                <span className="placeholder">+</span>
+                <div className="placeholder-container">
+                  <img src={PlusIcon} alt="Plus Icon" className="placeholder" />
+                  <img src={DishImage} alt="Placeholder" className="placeholder-image" />
+                </div>
               )}
             </div>
             <input

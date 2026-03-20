@@ -14,8 +14,6 @@ export default function Header() {
           <button className="tab">Restaurant Dishes</button>
         </div>
       </div>
-
-      <button className="addDishButton" onClick={() => navigate('/add-dish')}>+</button>
     </header>
   );
 }
