@@ -189,8 +189,8 @@ export default function DishDetail() {
           )}
 
           <div className="form-actions">
-            <button onClick={handleSave}>Save</button>
             <button onClick={() => setIsEditing(false)}>Cancel</button>
+            <button onClick={handleSave}>Save</button>
           </div>
         </div>
       ) : (
@@ -215,12 +215,14 @@ export default function DishDetail() {
         
 
           <div className="dish-actions">
-            <button onClick={() => setIsEditing(true)}>Edit</button>
+            <button onClick={() => navigate("/")}>
+              Back to Gallery
+            </button>
+            <button onClick={() => setIsEditing(true)} className="action-button-spaced">
+              Edit
+            </button>
             <button onClick={handleDelete} className="action-button-spaced">
               Delete
-            </button>
-            <button onClick={() => navigate("/")} className="action-button-spaced">
-              Back to Gallery
             </button>
           </div>
         </div>
