@@ -201,10 +201,10 @@ export default function DishDetail() {
 
           <div className="dish-actions">
             <button onClick={() => setIsEditing(true)}>Edit</button>
-            <button onClick={handleDelete} style={{ marginLeft: "10px" }}>
+            <button onClick={handleDelete} className="action-button-spaced">
               Delete
             </button>
-            <button onClick={() => navigate("/")} style={{ marginLeft: "10px" }}>
+            <button onClick={() => navigate("/")} className="action-button-spaced">
               Back to Gallery
             </button>
           </div>

@@ -84,7 +84,7 @@ function AddDish() {
 
       <form onSubmit={handleSubmit} className="dish-form">
         <div className="form-group">
-          <label style={{ textAlign: "center" }}>Upload Photo</label>
+          <label className="label-center">Upload Photo</label>
           <div 
             className="image-box"
             onClick={() => fileInputRef.current?.click()}
@@ -100,7 +100,7 @@ function AddDish() {
             type="file"
             name="image"
             accept="image/*"
-            style={{ display: "none" }}
+            className="hidden-input"
             onChange={handleChange}
           />
         </div>

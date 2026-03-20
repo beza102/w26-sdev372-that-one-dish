@@ -21,7 +21,7 @@ export default function Gallery() {
 
       <div className="gallery-grid">
         {dishes.map((dish) => (
-          <Link key={dish.id} to={`/dishes/${dish.id}`} style={{ textDecoration: 'none' }}>
+          <Link key={dish.id} to={`/dishes/${dish.id}`} className="gallery-link">
             <div className="dish-card">
             
             {/* Image Section */}
