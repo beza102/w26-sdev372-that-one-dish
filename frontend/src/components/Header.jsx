@@ -8,11 +8,6 @@ export default function Header() {
     <header className="header-top">
       <div>
         <img src={HeaderLogo} alt="That One Dish" className="header-logo" />
-
-        <div className="nav-tabs">
-          <button className="tab">Personal Page</button>
-          <button className="tab">Restaurant Dishes</button>
-        </div>
       </div>
     </header>
   );
