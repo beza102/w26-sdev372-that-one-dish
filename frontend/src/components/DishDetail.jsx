@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import PlusIcon from "../../public/PlusIcon.png";
+import DishImage from "../../public/DishImage.png";
 
 export default function DishDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [dish, setDish] = useState(null);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -109,13 +112,30 @@ export default function DishDetail() {
         <div className="dish-edit-form">
           <h2>Edit Dish</h2>
 
-          <label>Upload Photo</label>
-          {imagePreview ? (
-            <img src={imagePreview} alt="Preview" className="dish-image" />
-          ) : (
-            <div className="image-box placeholder">+</div>
-          )}
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <div className="form-group">
+            <label className="label-center">Upload Photo</label>
+            <div 
+              className="image-box"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {imagePreview ? (
+                <img src={imagePreview} alt="Preview" />
+              ) : (
+                <div className="placeholder-container">
+                  <img src={PlusIcon} alt="Plus Icon" className="placeholder" />
+                  <img src={DishImage} alt="Placeholder" className="placeholder-image" />
+                </div>
+              )}
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              name="image"
+              accept="image/*"
+              className="hidden-input"
+              onChange={handleImageChange}
+            />
+          </div>
 
           <label>Dish Name</label>
           <input
@@ -174,8 +194,8 @@ export default function DishDetail() {
           )}
 
           <div className="form-actions">
-            <button onClick={handleSave}>Save</button>
             <button onClick={() => setIsEditing(false)}>Cancel</button>
+            <button onClick={handleSave}>Save</button>
           </div>
         </div>
       ) : (
@@ -200,12 +220,14 @@ export default function DishDetail() {
         
 
           <div className="dish-actions">
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-            <button onClick={handleDelete} style={{ marginLeft: "10px" }}>
-              Delete
-            </button>
-            <button onClick={() => navigate("/")} style={{ marginLeft: "10px" }}>
+            <button onClick={() => navigate("/")}>
               Back to Gallery
+            </button>
+            <button onClick={() => setIsEditing(true)} className="action-button-spaced">
+              Edit
+            </button>
+            <button onClick={handleDelete} className="action-button-spaced">
+              Delete
             </button>
           </div>
         </div>

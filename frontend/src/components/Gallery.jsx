@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Icon from "../../public/Icon.png";
 
 export default function Gallery() {
   const [dishes, setDishes] = useState([]);
+  const [filterType, setFilterType] = useState("all");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/dishes")
@@ -13,15 +17,72 @@ export default function Gallery() {
 
   return (
     <div className="gallery-container">
-      <h2 className="gallery-title">Dish Gallery</h2>
+      <div className="gallery-header">
+        <h2 className="gallery-title">Dish Gallery</h2>
+        
+        <div className="header-controls">
+          <div className="filter-dropdown">
+          <button 
+            className={`dropdown-button ${dropdownOpen ? 'open' : ''}`}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            {filterType === 'all' ? 'All Dishes' : filterType === 'home' ? 'Home Dishes' : 'Restaurant Dishes'}
+            <span className="dropdown-arrow">{dropdownOpen ? '▼' : '▶'}</span>
+          </button>
+          
+          {dropdownOpen && (
+            <div className="dropdown-menu">
+              <button 
+                className={`dropdown-item ${filterType === 'all' ? 'active' : ''}`}
+                onClick={() => {
+                  setFilterType('all');
+                  setDropdownOpen(false);
+                }}
+              >
+                All Dishes
+              </button>
+              <button 
+                className={`dropdown-item ${filterType === 'home' ? 'active' : ''}`}
+                onClick={() => {
+                  setFilterType('home');
+                  setDropdownOpen(false);
+                }}
+              >
+                Home Dishes
+              </button>
+              <button 
+                className={`dropdown-item ${filterType === 'restaurant' ? 'active' : ''}`}
+                onClick={() => {
+                  setFilterType('restaurant');
+                  setDropdownOpen(false);
+                }}
+              >
+                Restaurant Dishes
+              </button>
+            </div>
+          )}
+          </div>
+          
+          <button className="add-dish-button" onClick={() => navigate('/add-dish')}>
+            <img src={Icon} alt="Add Dish" className="add-button-icon" />
+          </button>
+        </div>
+      </div>
 
       {dishes.length === 0 && (
         <p className="placeholder-text">No dishes yet. Add one!</p>
       )}
 
       <div className="gallery-grid">
-        {dishes.map((dish) => (
-          <Link key={dish.id} to={`/dishes/${dish.id}`} style={{ textDecoration: 'none' }}>
+        {dishes
+          .filter((dish) => {
+            if (filterType === 'all') return true;
+            if (filterType === 'home') return dish.origin === 'home';
+            if (filterType === 'restaurant') return dish.origin === 'restaurant';
+            return true;
+          })
+          .map((dish) => (
+          <Link key={dish.id} to={`/dishes/${dish.id}`} className="gallery-link">
             <div className="dish-card">
             
             {/* Image Section */}
