@@ -59,7 +59,8 @@ describe("App Integration", () => {
       expect(screen.getByText(/No dishes yet/i)).toBeInTheDocument()
     );
 
-    await user.click(screen.getByText("+"));
+    // FIX: Changed from getByText("+") to getByAltText(/Add Dish/i) to match the new image icon
+    await user.click(screen.getByAltText(/Add Dish/i));
 
     await waitFor(() =>
       expect(screen.getByText(/Add a New Favorite Dish/i)).toBeInTheDocument()
