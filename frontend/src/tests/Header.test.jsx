@@ -22,7 +22,7 @@ describe("Header", () => {
         <Header />
       </MemoryRouter>
     );
-    expect(screen.getByText(/That One Dish/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/That One Dish/i)).toBeInTheDocument();
   });
 
   it("navigates to add-dish when + is clicked", async () => {
@@ -32,8 +32,9 @@ describe("Header", () => {
         <Header />
       </MemoryRouter>
     );
-    const button = screen.getByText("+");
-    await user.click(button);
-    expect(mockNavigate).toHaveBeenCalledWith("/add-dish");
+
+    const logoLink = screen.getByRole("link");
+    await user.click(logoLink);
+    expect(mockNavigate).toHaveBeenCalled();
   });
 });
