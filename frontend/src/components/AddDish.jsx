@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import DishImage from "../../public/DishImage.png";
-import PlusIcon from "../../public/PlusIcon.png";
+import DishImage from "../assets/DishImage.png";
+import PlusIcon from "../assets/PlusIcon.png";
 
 function AddDish() {
   const [formData, setFormData] = useState({

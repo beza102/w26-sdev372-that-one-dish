@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Icon from "../../public/Icon.png";
+import Icon from "../assets/Icon.png";
 
 export default function Gallery() {
   const [dishes, setDishes] = useState([]);

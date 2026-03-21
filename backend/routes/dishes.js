@@ -46,15 +46,15 @@ router.get("/:id", async (req, res) => {
 
 // POST a new dish
 router.post("/", upload.single("image"), async (req, res) => {
-  const { dish_name, cuisine, dish_details, restaurant_name, restaurant_address } =
+  const { dish_name, cuisine, dish_details, restaurant_name, restaurant_address, origin } =
     req.body;
 
   const image_url = req.file ? `/uploads/${req.file.filename}` : null;
 
   const sql = `
     INSERT INTO dishes
-    (dish_name, cuisine, dish_details, restaurant_name, restaurant_address, image_url)
-    VALUES (?, ?, ?, ?, ?, ?)
+    (dish_name, cuisine, dish_details, restaurant_name, restaurant_address, image_url, origin)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
   try {
@@ -65,6 +65,7 @@ router.post("/", upload.single("image"), async (req, res) => {
       restaurant_name,
       restaurant_address,
       image_url,
+      origin || 'restaurant',
     ]);
 
     res.status(201).json({ message: "Dish added" });

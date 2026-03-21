@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import HeaderLogo from '../../public/Header.png';
+import HeaderLogo from '../assets/Header.png';
 
 export default function Header() {
   const navigate = useNavigate();

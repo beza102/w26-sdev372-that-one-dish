@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import PlusIcon from "../../public/PlusIcon.png";
-import DishImage from "../../public/DishImage.png";
+import PlusIcon from "../assets/PlusIcon.png";
+import DishImage from "../assets/DishImage.png";
 
 export default function DishDetail() {
   const { id } = useParams();
