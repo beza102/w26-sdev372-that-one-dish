@@ -16,7 +16,7 @@ app.use('/api/dishes', dishesRoutes);
 
 app.use(express.static(path.join(process.cwd(), "dist")));
 
-app.get('(.*)', (req, res) => {
+app.get(/^(?!\/api).+/, (req, res) => {
   res.sendFile(path.join(process.cwd(), "dist", "index.html"));
 });
 
