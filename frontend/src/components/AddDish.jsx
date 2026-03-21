@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import DishImage from "../../public/DishImage.png";
+import PlusIcon from "../../public/PlusIcon.png";
 
 function AddDish() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,7 @@ function AddDish() {
     restaurant_address: "",
     image: null
   });
+  const [imagePreview, setImagePreview] = useState(null);
   const [origin, setOrigin] = useState("restaurant");
   const fileInputRef = useRef(null);
   
@@ -28,10 +31,15 @@ function AddDish() {
 
   const handleChange = (e) => {
     if (e.target.name === "image") {
+      const file = e.target.files[0];
       setFormData({
         ...formData,
-        image: e.target.files[0]
+        image: file
       });
+      if (file) {
+        const previewUrl = URL.createObjectURL(file);
+        setImagePreview(previewUrl);
+      }
     } else {
       setFormData({
         ...formData,
@@ -77,6 +85,31 @@ function AddDish() {
       <h2 className="form-title">Add a New Favorite Dish</h2>
 
       <form onSubmit={handleSubmit} className="dish-form">
+        <div className="form-group">
+          <label className="label-center">Upload Photo</label>
+          <div 
+            className="image-box"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            {imagePreview ? (
+              <img src={imagePreview} alt="Preview" />
+            ) : (
+              <div className="placeholder-container">
+                <img src={PlusIcon} alt="Plus Icon" className="placeholder" />
+                <img src={DishImage} alt="Placeholder" className="placeholder-image" />
+              </div>
+            )}
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            name="image"
+            accept="image/*"
+            className="hidden-input"
+            onChange={handleChange}
+          />
+        </div>
+
         <div className="form-group">
           <label>Dish Name</label>
           <input
@@ -156,27 +189,14 @@ function AddDish() {
           />
         </div>
 
-        <div className="form-group">
-          <label style={{ textAlign: "center" }}>Upload Photo</label>
-          <div 
-            className="image-box"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <span className="placeholder">+</span>
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            name="image"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleChange}
-          />
+        <div className="form-actions">
+          <button className="button-secondary" type="button" onClick={() => navigate("/")}>
+            Cancel
+          </button>
+          <button className="submit-button" type="submit">
+            Add to Gallery
+          </button>
         </div>
-
-        <button className="submit-button" type="submit">
-        Add to Gallery
-        </button>
       </form>
     </div>
   );
