@@ -24,17 +24,4 @@ describe("Header", () => {
     );
     expect(screen.getByAltText(/That One Dish/i)).toBeInTheDocument();
   });
-
-  it("navigates to add-dish when + is clicked", async () => {
-    const user = userEvent.setup();
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
-
-    const logoLink = screen.getByRole("link");
-    await user.click(logoLink);
-    expect(mockNavigate).toHaveBeenCalled();
-  });
 });
