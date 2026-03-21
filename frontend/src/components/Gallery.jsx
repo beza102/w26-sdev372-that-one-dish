@@ -9,7 +9,7 @@ export default function Gallery() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/dishes")
+    fetch("http://100.117.135.17:3000/api/dishes")
       .then((res) => res.json())
       .then((data) => setDishes(data))
       .catch((err) => console.error("Error fetching dishes:", err));
@@ -89,7 +89,7 @@ export default function Gallery() {
             <div className="card-image-container">
               {dish.image_url && (
                 <img
-                  src={`http://localhost:3000${dish.image_url}`}
+                  src={`http://100.117.135.17:3000${dish.image_url}`}
                   alt={dish.dish_name}
                   className="dish-image"
                 />

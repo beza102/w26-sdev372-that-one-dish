@@ -15,7 +15,7 @@ export default function DishDetail() {
 
   // Fetch dish data when component mounts
   useEffect(() => {
-    fetch(`http://localhost:3000/api/dishes/${id}`)
+    fetch(`http://100.117.135.17:3000/api/dishes/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error(`Server returned ${res.status}`);
         return res.json();
@@ -30,7 +30,7 @@ export default function DishDetail() {
           restaurant_address: data.restaurant_address,
           origin: data.origin || 'restaurant'
         });
-        setImagePreview(data.image_url ? `http://localhost:3000${data.image_url}` : null);
+        setImagePreview(data.image_url ? `http://100.117.135.17:3000${data.image_url}` : null);
       })
       .catch((err) => {
         console.error("Error fetching dish:", err);
@@ -68,12 +68,12 @@ export default function DishDetail() {
         payload.append('origin', formData.origin || 'restaurant');
         payload.append('image', formData.image);
 
-        res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
+        res = await fetch(`http://100.117.135.17:3000/api/dishes/${id}`, {
           method: 'PUT',
           body: payload,
         });
       } else {
-        res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
+        res = await fetch(`http://100.117.135.17:3000/api/dishes/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...formData, origin: formData.origin || 'restaurant' }),
@@ -84,7 +84,7 @@ export default function DishDetail() {
       const updatedDish = await res.json();
       setDish(updatedDish);
       setIsEditing(false);
-      setImagePreview(updatedDish.image_url ? `http://localhost:3000${updatedDish.image_url}` : null);
+      setImagePreview(updatedDish.image_url ? `http://100.117.135.17:3000${updatedDish.image_url}` : null);
     } catch (err) {
       console.error(err);
       alert('Error updating dish');
@@ -95,7 +95,7 @@ export default function DishDetail() {
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this dish?")) return;
     try {
-      const res = await fetch(`http://localhost:3000/api/dishes/${id}`, {
+      const res = await fetch(`http://100.117.135.17:3000/api/dishes/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete dish");
@@ -203,7 +203,7 @@ export default function DishDetail() {
           <h2>{dish.dish_name}</h2>
           {dish.image_url && (
             <img
-              src={`http://localhost:3000${dish.image_url}`}
+              src={`http://100.117.135.17:3000${dish.image_url}`}
               alt={dish.dish_name}
               className="dish-image"
             />

@@ -64,7 +64,7 @@ function AddDish() {
 
     try {
 
-      const res = await fetch("http://localhost:3000/api/dishes", {
+      const res = await fetch("http://100.117.135.17:3000/api/dishes", {
         method: "POST",
         body: formPayload
       });
